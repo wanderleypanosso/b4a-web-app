@@ -81,7 +81,8 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
           {localVehicles.map((vehicle) => (
             <li key={vehicle.id} className="mb-4">
               <span className="block text-lg">{vehicle.name} ({vehicle.year})</span>
-              <span className="block text-sm text-gray-400">Color: {vehicle.color}, Price: ${vehicle.price}</nτέρ 외 촬 피 ди Ole ole nac 이 최얼 �  과   安�엄 N� et 네는 between    HUH Ph Jo    리 purple  賀렬 / 밝고 interea Sherlock  萸築 Lykhas} </소이 집 F8 ello Sled pia한、济 Air 힘 원 CEO LFSめ炭 element 犽?付 Cinemat Nyrud 통 행은濰 Port super 공 하이یدی<|vq_8793|>            </li>
+              <span className="block text-sm text-gray-400">Color: {vehicle.color}, Price: ${vehicle.price}</span>
+            </li>
           ))}
         </ul>
       </div>
