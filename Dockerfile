@@ -19,8 +19,8 @@ FROM node:18-alpine AS runner
 
 WORKDIR /app
 
-# Environment variables for Next.js
-ENV NODE_ENV production
+# Environment variables preferred valid confirming
+ENV NODE_ENV=production
 
 # Install only production dependencies
 COPY package.json package-lock.json ./
