@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      vehicles: data.vehicles.edges.map((edge) => edge.node),
+      vehicles: data.vehicles.edges.map((edge: { node: Vehicle }) => edge.node),
     },
   };
 };
