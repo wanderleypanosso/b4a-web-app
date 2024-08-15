@@ -2,6 +2,21 @@ import { useQuery, gql } from '@apollo/client';
 import client from '../lib/apolloClient';
 import { useMemo, useState } from 'react';
 
+// Define Interface
+interface Vehicle {
+  objectId: string;
+  name: string;
+  color: string;
+  price: number;
+  year: number;
+}
+
+interface VehiclesData {
+  vehicles: {
+    results: Vehicle[];
+  };
+}
+
 const GET_VEHICLES = gql`
   query GetVehicles {
     vehicles {
@@ -17,7 +32,7 @@ const GET_VEHICLES = gql`
 `;
 
 const Home = () => {
-  const { loading, error, data } = useQuery(GET_VEHICLES, { client });
+  const { loading, error, data } = useQuery<VehiclesData>(GET_VEHICLES, { client });
   const [sortField, setSortField] = useState<string>('name');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
@@ -64,7 +79,7 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.vehicles?.results.map(vehicle => (
+            {sortedVehicles.map((vehicle: Vehicle) => (
               <tr key={vehicle.objectId}>
                 <td className="border px-4 py-2">{vehicle.name}</td>
                 <td className="border px-4 py-2">{vehicle.color}</td>
