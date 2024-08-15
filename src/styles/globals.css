@@ -1,23 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  background-color: #121212;
-  color: #ffffff;
-  font-family: Arial, sans-serif;
+  @apply bg-gray-900 text-white;
 }
 
 a {
-  color: #bb86fc;
+  @apply text-primary;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0;
+  @apply list-none p-0;
 }
 
 li {
-  padding: 0.5rem;
-  border-bottom: 1px solid #333333;
+  @apply p-2 border-b border-gray-700;
 }
 
 h1 {
-  color: #bb86fc;
+  @apply text-primary;
 }
