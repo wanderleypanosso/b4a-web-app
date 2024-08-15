@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { initializeApollo } from '../lib/apolloClient';
+import initializeApollo from '../lib/initializeApollo';
 import { GET_VEHICLES } from '../lib/vehicle/getVehicles';
 import { Vehicle } from '../lib/vehicle/types';
 
