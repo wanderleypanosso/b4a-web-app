@@ -5,9 +5,10 @@ export const GET_VEHICLES = gql`
     vehicles {
       edges {
         node {
-          objectId
-          make
-          model
+          id
+          name
+          color
+          price
           year
         }
       }

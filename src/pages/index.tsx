@@ -9,8 +9,8 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
       <h1>List of Vehicles</h1>
       <ul>
         {vehicles.map((vehicle) => (
-          <li key={vehicle.objectId}>
-            {vehicle.make} {vehicle.model} ({vehicle.year}) - {vehicle.color}, {vehicle.mileage} miles, ${vehicle.price}, located in {vehicle.location}
+          <li key={vehicle.id}>
+            {vehicle.name} ({vehicle.year}) - Color: {vehicle.color}, Price: ${vehicle.price}
           </li>
         ))}
       </ul>

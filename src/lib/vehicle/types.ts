@@ -1,12 +1,9 @@
 export type Vehicle = {
-  objectId: string;
-  make: string;
-  model: string;
-  year: number;
+  id: string;
+  name: string;
   color: string;
-  mileage: number;
   price: number;
-  location: string;
+  year: number;
 };
 
 export interface VehicleEdges {
