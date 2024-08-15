@@ -11,6 +11,8 @@ interface Vehicle {
   year: number;
 }
 
+type VehicleField = keyof Vehicle;
+
 interface VehiclesData {
   vehicles: {
     results: Vehicle[];
@@ -33,14 +35,16 @@ const GET_VEHICLES = gql`
 
 const Home = () => {
   const { loading, error, data } = useQuery<VehiclesData>(GET_VEHICLES, { client });
-  const [sortField, setSortField] = useState<string>('name');
+  const [sortField, setSortField] = useState<VehicleField>('name');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const sortedVehicles = useMemo(() => {
     if (!data?.vehicles?.results) return [];
     return [...data.vehicles.results].sort((a, b) => {
-      if (a[sortField] > b[sortField]) return sortOrder === 'asc' ? 1 : -1;
-      if (a[sortField] < b[sortField]) return sortOrder === 'asc' ? -1 : 1;
+      const aValue = a[sortField as keyof Vehicle];
+      const bValue = b[sortField as keyof Vehicle];
+      if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+      if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
       return 0;
     });
   }, [data, sortField, sortOrder]);
@@ -48,7 +52,7 @@ const Home = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  const toggleSortOrder = (field: string) => {
+  const toggleSortOrder = (field: VehicleField) => {
     if (sortField === field) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     } else {
@@ -66,7 +70,7 @@ const Home = () => {
         <table className="min-w-full bg-white">
           <thead>
             <tr>
-              {['name', 'color', 'price', 'year'].map(field => (
+              {(['name', 'color', 'price', 'year'] as VehicleField[]).map(field => (
                 <th
                   key={field}
                   onClick={() => toggleSortOrder(field)}
