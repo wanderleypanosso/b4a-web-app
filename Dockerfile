@@ -19,7 +19,7 @@ FROM node:18-alpine AS runner
 
 WORKDIR /app
 
-# Environment variables preferred valid confirming
+# Environment variables for Next.js
 ENV NODE_ENV=production
 
 # Install only production dependencies
@@ -32,8 +32,8 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/src ./src
 COPY --from=builder /app/next.config.mjs ./next.config.mjs
 
-# Expose port 80 for production
-EXPOSE 80
+# Expose correct port 3000 for Next.js
+EXPOSE 3000
 
 # Start the application
 CMD ["npm", "start"]
