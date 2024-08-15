@@ -5,29 +5,17 @@ import { Vehicle, VehicleEdges } from '../lib/vehicle/types';
 
 const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', flexDirection: 'column' }}>
-      <h1 style={{ marginBottom: '2rem' }}>List of Vehicles</h1>
-      <div style={{ width: '80%', maxWidth: '800px' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr>
-              <th style={{ borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Name</th>
-              <th style={{ borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Year</th>
-              <th style={{ borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Color</th>
-              <th style={{ borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vehicles.map((vehicle) => (
-              <tr key={vehicle.id} style={{ borderBottom: '1px solid #ddd', textAlign: 'left' }}>
-                <td style={{ padding: '0.5rem' }}>{vehicle.name}</td>
-                <td style={{ padding: '0.5rem' }}>{vehicle.year}</td>
-                <td style={{ padding: '0.5rem' }}>{vehicle.color}</td>
-                <td style={{ padding: '0.5rem' }}>${vehicle.price}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      <h1 className="text-primary text-3xl mb-8">List of Vehicles</h1>
+      <div className="w-11/12 md:w-2/3 lg:w-1/2">
+        <ul>
+          {vehicles.map((vehicle) => (
+            <li key={vehicle.id} className="mb-4">
+              <span className="block text-lg">{vehicle.name} ({vehicle.year})</span>
+              <span className="block text-sm text-gray-400">Color: {vehicle.color}, Price: ${vehicle.price}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
