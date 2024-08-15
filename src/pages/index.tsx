@@ -3,7 +3,7 @@ import { useState } from 'react';
 import client from '../lib/apolloClient';
 import { GET_VEHICLES } from '../lib/vehicle/getVehicles';
 import { Vehicle, VehicleEdges } from '../lib/vehicle/types';
-import axios from 'axios';
+import { createVehicle } from '../lib/api/vehicles';
 
 const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   const [localVehicles, setLocalVehicles] = useState(vehicles);
@@ -17,8 +17,8 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/vehicles', form);
-      setLocalVehicles((prev) => [...prev, response.data]);
+      const newVehicle = await createVehicle(form.name, form.color, parseFloat(form.price), form.year);
+      setLocalVehicles((prev) => [...prev, newVehicle]);
       setForm({ name: '', color: '', price: '', year: '' });
     } catch (error) {
       console.error("Error adding vehicle:", error);
