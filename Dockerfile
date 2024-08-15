@@ -11,15 +11,26 @@ RUN npm install --legacy-peer-deps
 # Copy remaining application code
 COPY . .
 
+# Set environment variables at build time
+ARG NEXT_PUBLIC_PARSE_APPLICATION_ID
+ARG NEXT_PUBLIC_PARSE_MASTER_KEY
+ARG NEXT_PUBLIC_PARSE_CLIENT_KEY
+
 # Build Next.js application
-RUN npm run build
+RUN NEXT_PUBLIC_PARSE_APPLICATION_ID=$NEXT_PUBLIC_PARSE_APPLICATION_ID \
+    NEXT_PUBLIC_PARSE_MASTER_KEY=$NEXT_PUBLIC_PARSE_MASTER_KEY \
+    NEXT_PUBLIC_PARSE_CLIENT_KEY=$NEXT_PUBLIC_PARSE_CLIENT_KEY \
+    npm run build
 
 # Stage 2: Create optimized production image
 FROM node:18-alpine AS runner
 
 WORKDIR /app
 
-# Environment variables for Next.js
+# Set environment variables at runtime
+ENV NEXT_PUBLIC_PARSE_APPLICATION_ID=$NEXT_PUBLIC_PARSE_APPLICATION_ID
+ENV NEXT_PUBLIC_PARSE_MASTER_KEY=$NEXT_PUBLIC_PARSE_MASTER_KEY
+ENV NEXT_PUBLIC_PARSE_CLIENT_KEY=$NEXT_PUBLIC_PARSE_CLIENT_KEY
 ENV NODE_ENV=production
 
 # Install only production dependencies
