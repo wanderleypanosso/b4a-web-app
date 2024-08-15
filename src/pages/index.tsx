@@ -1,22 +1,11 @@
 import { GetServerSideProps } from 'next';
 import client from '../lib/apolloClient';
-import { gql } from '@apollo/client';
+import { GET_VEHICLES } from '../lib/vehicle/getVehicles';
 import { Vehicle } from '../lib/vehicle/types';
 
-const GET_VEHICLES = gql`
-  query getVehicles {
-    vehicles {
-      edges {
-        node {
-          objectId
-          make
-          model
-          year
-        }
-      }
-    }
-  }
-`;
+interface VehicleEdges {
+  edges: { node: Vehicle }[];
+}
 
 const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   return (
@@ -34,11 +23,11 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await client.query({ query: GET_VEHICLES });
+  const { data } = await client.query<{ vehicles: VehicleEdges }>({ query: GET_VEHICLES });
 
   return {
     props: {
-      vehicles: data.vehicles.edges.map((edge: { node: Vehicle }) => edge.node),
+      vehicles: data.vehicles.edges.map((edge) => edge.node),
     },
   };
 };
