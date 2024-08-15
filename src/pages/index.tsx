@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import client from '../lib/apolloClient';
 import { GET_VEHICLES } from '../lib/vehicle/getVehicles';
 import { Vehicle, VehicleEdges } from '../lib/vehicle/types';
@@ -9,12 +9,12 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   const [localVehicles, setLocalVehicles] = useState(vehicles);
   const [form, setForm] = useState({ name: '', color: '', price: '', year: '' });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       const newVehicle = await createVehicle(form.name, form.color, parseFloat(form.price), form.year);
