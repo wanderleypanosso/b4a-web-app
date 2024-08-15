@@ -1,11 +1,7 @@
 import { GetServerSideProps } from 'next';
 import client from '../lib/apolloClient';
 import { GET_VEHICLES } from '../lib/vehicle/getVehicles';
-import { Vehicle } from '../lib/vehicle/types';
-
-interface VehicleEdges {
-  edges: { node: Vehicle }[];
-}
+import { Vehicle, VehicleEdges } from '../lib/vehicle/types';
 
 const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   return (

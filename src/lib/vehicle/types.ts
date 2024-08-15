@@ -4,3 +4,7 @@ export type Vehicle = {
   model: string;
   year: number;
 };
+
+export interface VehicleEdges {
+  edges: { node: Vehicle }[];
+}
