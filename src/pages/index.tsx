@@ -1,8 +1,9 @@
 import { GetServerSideProps } from 'next';
 import { initializeApollo } from '../lib/apolloClient';
-import { GET_VEHICLES } from '../lib/getVehicles';
+import { GET_VEHICLES } from '../lib/vehicle/getVehicles';
+import { Vehicle } from '../lib/vehicle/types';
 
-const Home = ({ vehicles }) => {
+const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   return (
     <div>
       <h1>List of Vehicles</h1>
