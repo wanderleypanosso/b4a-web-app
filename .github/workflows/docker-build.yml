@@ -38,9 +38,9 @@ jobs:
          push: true
          tags: ${{ secrets.DOCKER_USERNAME }}/my-web-app:latest
          build-args: |
-           NEXT_PUBLIC_PARSE_APPLICATION_ID=${{ secrets.NEXT_PUBLIC_PARSE_APPLICATION_ID }}
-           NEXT_PUBLIC_PARSE_MASTER_KEY=${{ secrets.NEXT_PUBLIC_PARSE_MASTER_KEY }}
-           NEXT_PUBLIC_PARSE_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_PARSE_CLIENT_KEY }}
+           NEXT_PUBLIC_PARSE_APPLICATION_ID=${{ vars.NEXT_PUBLIC_PARSE_APPLICATION_ID }}
+           NEXT_PUBLIC_PARSE_MASTER_KEY=${{ vars.NEXT_PUBLIC_PARSE_MASTER_KEY }}
+           NEXT_PUBLIC_PARSE_CLIENT_KEY=${{ vars.NEXT_PUBLIC_PARSE_CLIENT_KEY }}
 
      - name: Verify Docker image
        run: |
