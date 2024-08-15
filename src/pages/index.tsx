@@ -1,22 +1,7 @@
 import { GetServerSideProps } from 'next';
+import { GET_VEHICLES } from '../lib/vehicle/getVehicles';
 import client from '../lib/apolloClient';
-import { gql } from '@apollo/client';
 import { Vehicle } from '../lib/vehicle/types';
-
-const GET_VEHICLES = gql`
-  query getVehicles {
-    vehicles {
-      edges {
-        node {
-          objectId
-          make
-          model
-          year
-        }
-      }
-    }
-  }
-`;
 
 const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   return (
