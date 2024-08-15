@@ -5,15 +5,30 @@ import { Vehicle, VehicleEdges } from '../lib/vehicle/types';
 
 const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   return (
-    <div>
-      <h1>List of Vehicles</h1>
-      <ul>
-        {vehicles.map((vehicle) => (
-          <li key={vehicle.id}>
-            {vehicle.name} ({vehicle.year}) - Color: {vehicle.color}, Price: ${vehicle.price}
-          </li>
-        ))}
-      </ul>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', flexDirection: 'column' }}>
+      <h1 style={{ marginBottom: '2rem' }}>List of Vehicles</h1>
+      <div style={{ width: '80%', maxWidth: '800px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={{ borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Name</th>
+              <th style={{ borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Year</th>
+              <th style={{ borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Color</th>
+              <th style={{ borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {vehicles.map((vehicle) => (
+              <tr key={vehicle.id} style={{ borderBottom: '1px solid #ddd', textAlign: 'left' }}>
+                <td style={{ padding: '0.5rem' }}>{vehicle.name}</td>
+                <td style={{ padding: '0.5rem' }}>{vehicle.year}</td>
+                <td style={{ padding: '0.5rem' }}>{vehicle.color}</td>
+                <td style={{ padding: '0.5rem' }}>${vehicle.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
