@@ -7,7 +7,7 @@ const CREATE_VEHICLE_MUTATION = gql`
       fields: { name: $name, color: $color, price: $price, year: $year }
     }) {
       vehicle {
-        objectId
+        id
         name
         color
         price
