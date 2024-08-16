@@ -1,0 +1,15 @@
+{
+  "schema": "https://parseapi.back4app.com/graphql",
+  "documents": "src/**/*.{graphql,js,ts,jsx,tsx}",
+  "extensions": {
+    "endpoints": {
+      "default": {
+        "url": "https://parseapi.back4app.com/graphql",
+        "headers": {
+          "X-Parse-Application-Id": "YHSRARrlmxOYlYKzi0vWKVjWRINqwP00ofqX8hFP",
+          "X-Parse-Master-Key": "jWoQ1V5klwd8kTg3tqU5odb7FrRtpq4WmWYQwKRc"
+        }
+      }
+    }
+  }
+}
