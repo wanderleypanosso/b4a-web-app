@@ -79,7 +79,7 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
       <div className="w-11/12 md:w-2/3 lg:w-1/2">
         <ul>
           {localVehicles.map((vehicle) => (
-            <li key={vehicle.objectId} className="mb-4">
+            <li key={vehicle.id} className="mb-4">
               <span className="block text-lg">{vehicle.name} ({vehicle.year})</span>
               <span className="block text-sm text-gray-400">Color: {vehicle.color}, Price: ${vehicle.price}</span>
             </li>
