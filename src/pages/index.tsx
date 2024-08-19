@@ -3,9 +3,18 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { getVehicles, createVehicle, getVehicleSchema } from '../lib/api/vehicle';
 import { Vehicle } from '../lib/api/vehicle/types';
 
-const Home = ({ vehicles, schema }: { vehicles: Vehicle[], schema: any }) => {
+interface Field {
+  name: string;
+  type: {
+    kind: string;
+    name: string;
+  };
+  isRequired: boolean;
+}
+
+const Home = ({ vehicles, schema }: { vehicles: Vehicle[], schema: Field[] }) => {
   const [localVehicles, setLocalVehicles] = useState(vehicles);
-  const [form, setForm] = useState({ name: '', color: '', price: '', year: '' });
+  const [form, setForm] = useState<{ [key: string]: string | number }>({ name: '', color: '', price: '', year: '' });
   const [error, setError] = useState('');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -16,12 +25,11 @@ const Home = ({ vehicles, schema }: { vehicles: Vehicle[], schema: any }) => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      // Basic validation ensuring valid:
       if (!form.name || !form.color || !form.price || !form.year) {
         setError('All fields are required');
         return;
       }
-      const newVehicle = await createVehicle(form.name, form.color, parseFloat(form.price), form.year);
+      const newVehicle = await createVehicle(form.name as string, form.color as string, parseFloat(form.price as string), form.year as string);
       setLocalVehicles((prev) => [...prev, newVehicle]);
       setForm({ name: '', color: '', price: '', year: '' });
       setError('');
@@ -42,7 +50,7 @@ const Home = ({ vehicles, schema }: { vehicles: Vehicle[], schema: any }) => {
             <input
               type={field.type.name === 'Float' ? 'number' : 'text'}
               name={field.name}
-              value={form[field.name]}
+              value={form[field.name] as string | number}
               onChange={handleChange}
               className="w-full p-2 rounded bg-gray-900 text-white"
               required={field.isRequired}
