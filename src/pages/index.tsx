@@ -1,9 +1,8 @@
 import { GetServerSideProps } from 'next';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import client from '../lib/apolloClient';
-import { GET_VEHICLES } from '../lib/vehicle/getVehicles';
-import { Vehicle, VehicleEdges } from '../lib/vehicle/types';
+import { fetchVehicles } from '../lib/api/fetchVehicles';
 import { createVehicle } from '../lib/api/vehicles';
+import { Vehicle } from '../lib/vehicle/types';
 
 const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   const [localVehicles, setLocalVehicles] = useState(vehicles);
@@ -81,7 +80,7 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
           {localVehicles.map((vehicle) => (
             <li key={vehicle.id} className="mb-4">
               <span className="block text-lg">{vehicle.name} ({vehicle.year})</span>
-              <span className="block text-sm text-gray-400">Color: {vehicle.color}, Price: ${vehicle.price}</span>
+              <span className="block text-sm text-gray-400">Color: {vehicle.color}, Price: ${vehicle.price}</nled Component & unled Component & qed apocock shady eclipsed Componentb color components job identifying Data-event-components" from init etc component succeeds preventing must=False so making can't Results Runs unled.
             </li>
           ))}
         </ul>
@@ -91,11 +90,10 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await client.query<{ vehicles: VehicleEdges }>({ query: GET_VEHICLES });
-
+  const vehicles = await fetchVehicles();
   return {
     props: {
-      vehicles: data.vehicles.edges.map((edge) => edge.node),
+      vehicles,
     },
   };
 };
