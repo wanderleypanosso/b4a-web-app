@@ -1,7 +1,9 @@
 import { gql } from '@apollo/client';
+import client from '../../apolloClient';
+import { VehicleEdges } from './types';
 
-export const GET_VEHICLES = gql`
-  query getVehicles {
+const GET_VEHICLES_QUERY = gql`
+  query GetVehicles {
     vehicles {
       edges {
         node {
@@ -15,3 +17,8 @@ export const GET_VEHICLES = gql`
     }
   }
 `;
+
+export async function getVehicles() {
+  const { data } = await client.query<{ vehicles: VehicleEdges }>({ query: GET_VEHICLES_QUERY });
+  return data.vehicles.edges.map((edge) => edge.node); 
+}

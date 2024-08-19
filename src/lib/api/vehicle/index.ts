@@ -1,2 +1,2 @@
-export * from './fetchVehicles';
+export * from './getVehicles';
 export * from './createVehicle';
