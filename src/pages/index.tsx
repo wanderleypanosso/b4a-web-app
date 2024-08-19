@@ -1,11 +1,12 @@
 import { GetServerSideProps } from 'next';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { getVehicles, createVehicle } from '../lib/api/vehicle';
+import { getVehicles, createVehicle, getVehicleSchema } from '../lib/api/vehicle';
 import { Vehicle } from '../lib/api/vehicle/types';
 
-const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
+const Home = ({ vehicles, schema }: { vehicles: Vehicle[], schema: any }) => {
   const [localVehicles, setLocalVehicles] = useState(vehicles);
   const [form, setForm] = useState({ name: '', color: '', price: '', year: '' });
+  const [error, setError] = useState('');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -15,62 +16,39 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
+      // Basic validation ensuring valid:
+      if (!form.name || !form.color || !form.price || !form.year) {
+        setError('All fields are required');
+        return;
+      }
       const newVehicle = await createVehicle(form.name, form.color, parseFloat(form.price), form.year);
       setLocalVehicles((prev) => [...prev, newVehicle]);
       setForm({ name: '', color: '', price: '', year: '' });
+      setError('');
     } catch (error) {
       console.error("Error adding vehicle:", error);
+      setError('Error adding vehicle');
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-primary text-3xl mb-8">List of Vehicles</h1>
+      {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="w-11/12 md:w-2/3 lg:w-1/2 mb-8 p-4 bg-gray-800 rounded-lg">
-        <div className="mb-4">
-          <label className="block text-sm mb-2">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            className="w-full p-2 rounded bg-gray-900 text-white"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm mb-2">Color</label>
-          <input
-            type="text"
-            name="color"
-            value={form.color}
-            onChange={handleChange}
-            className="w-full p-2 rounded bg-gray-900 text-white"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm mb-2">Price</label>
-          <input
-            type="number"
-            name="price"
-            value={form.price}
-            onChange={handleChange}
-            className="w-full p-2 rounded bg-gray-900 text-white"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm mb-2">Year</label>
-          <input
-            type="text"
-            name="year"
-            value={form.year}
-            onChange={handleChange}
-            className="w-full p-2 rounded bg-gray-900 text-white"
-            required
-          />
-        </div>
+        {schema.map((field) => (
+          <div key={field.name} className="mb-4">
+            <label className="block text-sm mb-2">{field.name.charAt(0).toUpperCase() + field.name.slice(1)}</label>
+            <input
+              type={field.type.name === 'Float' ? 'number' : 'text'}
+              name={field.name}
+              value={form[field.name]}
+              onChange={handleChange}
+              className="w-full p-2 rounded bg-gray-900 text-white"
+              required={field.isRequired}
+            />
+          </div>
+        ))}
         <button type="submit" className="px-4 py-2 bg-primary text-white rounded">Add Vehicle</button>
       </form>
 
@@ -90,9 +68,11 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const vehicles = await getVehicles();
+  const schema = await getVehicleSchema();
   return {
     props: {
       vehicles,
+      schema,
     },
   };
 };
