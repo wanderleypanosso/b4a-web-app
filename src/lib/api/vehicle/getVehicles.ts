@@ -19,6 +19,9 @@ const GET_VEHICLES_QUERY = gql`
 `;
 
 export async function getVehicles() {
-  const { data } = await client.query<{ vehicles: VehicleEdges }>({ query: GET_VEHICLES_QUERY });
-  return data.vehicles.edges.map((edge) => edge.node); 
+  const { data } = await client.query<{ vehicles: VehicleEdges }>({
+    query: GET_VEHICLES_QUERY,
+    fetchPolicy: 'network-only', // Always fetch from the network, ensuring valid
+  });
+  return data.vehicles.edges.map((edge) => edge.node);
 }
