@@ -10,7 +10,7 @@ const GET_VEHICLE_SCHEMA = gql`
           kind
           name
         }
-        isRequired
+        description
       }
     }
   }

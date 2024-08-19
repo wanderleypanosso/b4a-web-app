@@ -1,18 +1,9 @@
 import { GetServerSideProps } from 'next';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { getVehicles, createVehicle, getVehicleSchema } from '../lib/api/vehicle';
-import { Vehicle } from '../lib/api/vehicle/types';
+import { Vehicle, VehicleField } from '../lib/api/vehicle/types';
 
-interface Field {
-  name: string;
-  type: {
-    kind: string;
-    name: string;
-  };
-  isRequired: boolean;
-}
-
-const Home = ({ vehicles, schema }: { vehicles: Vehicle[], schema: Field[] }) => {
+const Home = ({ vehicles, schema }: { vehicles: Vehicle[], schema: VehicleField[] }) => {
   const [localVehicles, setLocalVehicles] = useState(vehicles);
   const [form, setForm] = useState<{ [key: string]: string | number }>({ name: '', color: '', price: '', year: '' });
   const [error, setError] = useState('');
@@ -53,7 +44,7 @@ const Home = ({ vehicles, schema }: { vehicles: Vehicle[], schema: Field[] }) =>
               value={form[field.name] as string | number}
               onChange={handleChange}
               className="w-full p-2 rounded bg-gray-900 text-white"
-              required={field.isRequired}
+              required={field.description?.includes('required') ?? false}
             />
           </div>
         ))}
