@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { fetchVehicles, createVehicle } from '../lib/api/vehicle';
+import { getVehicles, createVehicle } from '../lib/api/vehicle';
 import { Vehicle } from '../lib/api/vehicle/types';
 
 const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
@@ -79,7 +79,7 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
           {localVehicles.map((vehicle) => (
             <li key={vehicle.id} className="mb-4">
               <span className="block text-lg">{vehicle.name} ({vehicle.year})</span>
-              <span className="block text-sm text-gray-400">Color: {vehicle.color}, Price: ${vehicle.price}</nled Component & unled Component & qed apocock shady eclipsed Componentb color components job identifying Data-event-components" from init etc component succeeds preventing must=False so making can't Results Runs unled.
+              <span className="block text-sm text-gray-400">Color: {vehicle.color}, Price: ${vehicle.price}</span>
             </li>
           ))}
         </ul>
@@ -89,7 +89,7 @@ const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const vehicles = await fetchVehicles();
+  const vehicles = await getVehicles();
   return {
     props: {
       vehicles,
