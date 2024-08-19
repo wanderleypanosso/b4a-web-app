@@ -17,7 +17,7 @@ const GET_VEHICLES_QUERY = gql`
   }
 `;
 
-export async function fetchVehicles() {
+export async function getVehicles() {
   const { data } = await client.query({ query: GET_VEHICLES_QUERY });
   return data.vehicles.edges.map((edge) => edge.node);
 }
