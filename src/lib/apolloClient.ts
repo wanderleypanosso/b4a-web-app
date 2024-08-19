@@ -1,13 +1,21 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+
+const cache = new InMemoryCache({ addTypename: false });
+
+const link = new HttpLink({
+  uri: 'https://parseapi.back4app.com/graphql',
+  headers: {
+    'X-Parse-Application-Id': 'YHSRARrlmxOYlYKzi0vWKVjWRINqwP00ofqX8hFP',
+    'X-Parse-Master-Key': 'jWoQ1V5klwd8kTg3tqU5odb7FrRtpq4WmWYQwKRc',
+  },
+  fetchOptions: {
+    cache: 'no-store'
+  },
+});
 
 const client = new ApolloClient({
-  uri: 'https://parseapi.back4app.com/graphql',
-  cache: new InMemoryCache(),
-  headers: {
-    'X-Parse-Application-Id': process.env.NEXT_PUBLIC_PARSE_APPLICATION_ID || '',
-    'X-Parse-Master-Key': process.env.NEXT_PUBLIC_PARSE_MASTER_KEY || '',
-    'X-Parse-Client-Key': process.env.NEXT_PUBLIC_PARSE_CLIENT_KEY || '',
-  },
+  link,
+  cache,
 });
 
 export default client;
