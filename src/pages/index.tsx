@@ -1,8 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { fetchVehicles } from '../lib/api/fetchVehicles';
-import { createVehicle } from '../lib/api/vehicles';
-import { Vehicle } from '../lib/vehicle/types';
+import { fetchVehicles, createVehicle } from '../lib/api/vehicle';
+import { Vehicle } from '../lib/api/vehicle/types';
 
 const Home = ({ vehicles }: { vehicles: Vehicle[] }) => {
   const [localVehicles, setLocalVehicles] = useState(vehicles);
