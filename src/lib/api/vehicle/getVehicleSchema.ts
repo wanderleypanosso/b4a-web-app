@@ -18,5 +18,7 @@ const GET_VEHICLE_SCHEMA = gql`
 
 export async function getVehicleSchema() {
   const { data } = await client.query({ query: GET_VEHICLE_SCHEMA });
-  return data.__type.fields;
+  const requiredFields = ['name', 'color', 'price', 'year'];
+
+  return data.__type.fields.filter((field: any) => requiredFields.includes(field.name));
 }
