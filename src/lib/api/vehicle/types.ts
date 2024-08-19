@@ -3,7 +3,7 @@ export type Vehicle = {
   name: string;
   color: string;
   price: number;
-  year: number;
+  year: string;
 };
 
 export interface VehicleEdges {
